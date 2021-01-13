@@ -2,11 +2,12 @@ package main
 
 import (
 	logger "github.com/heru-wijaya/go-grpc-skeleton/lib"
-	log "github.com/sirupsen/logrus"
 )
 
 func main() {
-	logger.Log("test", log.Fields{
-		"test": "testing",
+	name := "first last"
+
+	logger.Log("test", map[string]interface{}{
+		"name": name,
 	}, "error")
 }

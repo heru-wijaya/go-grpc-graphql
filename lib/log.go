@@ -33,21 +33,24 @@ func init() {
 }
 
 // Log function for choosing level for logging
-func Log(msg string, obj log.Fields, level string) {
+func Log(msg string, obj map[string]interface{}, level string) {
+	logger := log.WithFields(log.Fields{
+		"obj": obj,
+	})
 	switch level {
 	case debug:
-		log.WithFields(obj).Debug(msg)
+		logger.Debug(msg)
 	case trace:
-		log.WithFields(obj).Trace(msg)
+		logger.Trace(msg)
 	case warn:
-		log.WithFields(obj).Warn(msg)
+		logger.Warn(msg)
 	case error:
-		log.WithFields(obj).Error(msg)
+		logger.Error(msg)
 	case fatal:
-		log.WithFields(obj).Fatal(msg)
+		logger.Fatal(msg)
 	case panic:
-		log.WithFields(obj).Panic(msg)
+		logger.Panic(msg)
 	default:
-		log.WithFields(obj).Info(msg)
+		logger.Info(msg)
 	}
 }
