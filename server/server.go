@@ -1,6 +1,6 @@
 //go:generate protoc --go_out=./model/pb --go_opt=module=github.com/heru-wijaya/go-grpc-skeleton/model/pb  ./model/account.proto
 //go:generate protoc --go-grpc_out=./model/pb --go-grpc_opt=module=github.com/heru-wijaya/go-grpc-skeleton/model/pb ./model/account.proto
-package main
+package server
 
 import (
 	"context"

@@ -6,6 +6,7 @@ import (
 	"time"
 
 	repo "github.com/heru-wijaya/go-grpc-skeleton/repository"
+	server "github.com/heru-wijaya/go-grpc-skeleton/server"
 	service "github.com/heru-wijaya/go-grpc-skeleton/service"
 	"github.com/joho/godotenv"
 	"github.com/tinrab/retry"
@@ -17,7 +18,7 @@ type Config struct {
 }
 
 func main() {
-	err := godotenv.Load(".env")
+	err := godotenv.Load("./.env")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,5 +36,5 @@ func main() {
 
 	log.Println("Listening on port 8080...")
 	s := service.NewService(r)
-	log.Fatal(ListenGRPC(s, 8080))
+	log.Fatal(server.ListenGRPC(s, 8080))
 }
