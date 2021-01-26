@@ -54,3 +54,7 @@ func Log(msg string, obj map[string]interface{}, level string) {
 		logger.Info(msg)
 	}
 }
+
+// logger.Log("test", map[string]interface{}{
+// 	"name": name,
+// }, "error")

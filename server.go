@@ -18,6 +18,7 @@ type grpcServer struct {
 	pb.UnimplementedAccountServiceServer
 }
 
+// ListenGRPC for register server to grpc
 func ListenGRPC(s service.AccountService, port int) error {
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
