@@ -3,6 +3,8 @@ package repository
 import (
 	"context"
 	"database/sql"
+
+	_ "github.com/lib/pq"
 )
 
 // Account type struct
