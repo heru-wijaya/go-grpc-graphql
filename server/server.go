@@ -19,7 +19,7 @@ type grpcServer struct {
 
 // ListenGRPC for register server to grpc
 func ListenGRPC(s service.AccountService, port int) error {
-	log.Println("server.server NewClient begin")
+	log.Println("server.server ListenGRPC begin")
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
 		return err
