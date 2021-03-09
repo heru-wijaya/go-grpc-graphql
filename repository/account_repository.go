@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"log"
 
 	_ "github.com/lib/pq"
 )
@@ -27,6 +28,7 @@ type postgresRepository struct {
 
 // NewPostgresRepository is for wrapper postgres sql
 func NewPostgresRepository(url string) (AccountRepository, error) {
+	log.Println("repository.account_repository NewPostgresRepository begin")
 	db, err := sql.Open("postgres", url)
 	if err != nil {
 		return nil, err
@@ -39,19 +41,23 @@ func NewPostgresRepository(url string) (AccountRepository, error) {
 }
 
 func (r *postgresRepository) Close() {
+	log.Println("repository.account_repository Close begin")
 	r.db.Close()
 }
 
 func (r *postgresRepository) Ping() error {
+	log.Println("repository.account_repository Ping begin")
 	return r.db.Ping()
 }
 
 func (r *postgresRepository) PutAccount(ctx context.Context, a Account) error {
+	log.Println("repository.account_repository PutAccount begin")
 	_, err := r.db.ExecContext(ctx, "INSERT INTO accounts(id, name) VALUES($1, $2)", a.ID, a.Name)
 	return err
 }
 
 func (r *postgresRepository) GetAccountByID(ctx context.Context, id string) (*Account, error) {
+	log.Println("repository.account_repository GetAccountByID begin")
 	row := r.db.QueryRowContext(ctx, "SELECT id, name FROM accounts WHERE id = $1", id)
 	a := &Account{}
 	if err := row.Scan(&a.ID, &a.Name); err != nil {
@@ -61,6 +67,7 @@ func (r *postgresRepository) GetAccountByID(ctx context.Context, id string) (*Ac
 }
 
 func (r *postgresRepository) ListAccounts(ctx context.Context, skip uint64, take uint64) ([]Account, error) {
+	log.Println("repository.account_repository ListAccounts begin")
 	rows, err := r.db.QueryContext(
 		ctx,
 		"SELECT id, name FROM accounts ORDER BY id DESC OFFSET $1 LIMIT $2",

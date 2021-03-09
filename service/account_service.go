@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"log"
 
 	repo "github.com/heru-wijaya/go-grpc-skeleton/repository"
 	"github.com/segmentio/ksuid"
@@ -24,6 +25,7 @@ func NewService(r repo.AccountRepository) AccountService {
 }
 
 func (s *accountService) PostAccount(ctx context.Context, name string) (*repo.Account, error) {
+	log.Println("service.account_service postAccount begin")
 	a := &repo.Account{
 		Name: name,
 		ID:   ksuid.New().String(),
@@ -35,10 +37,12 @@ func (s *accountService) PostAccount(ctx context.Context, name string) (*repo.Ac
 }
 
 func (s *accountService) GetAccount(ctx context.Context, id string) (*repo.Account, error) {
+	log.Println("service.account_service GetAccount begin")
 	return s.repository.GetAccountByID(ctx, id)
 }
 
 func (s *accountService) GetAccounts(ctx context.Context, skip uint64, take uint64) ([]repo.Account, error) {
+	log.Println("service.account_service GetAccounts begin")
 	if take > 100 || (skip == 0 && take == 0) {
 		take = 100
 	}

@@ -3,9 +3,8 @@ RUN apk --no-cache add gcc g++ make ca-certificates
 WORKDIR /go/src/github.com/heru-wijaya/go-grpc-skeleton
 COPY . .
 RUN go mod vendor
-RUN ls -la
 RUN GO111MODULE=on go build -mod vendor -o /go/bin/app ./cmd
-COPY .env /go/bin/app
+COPY .env /go/bin
 
 FROM alpine:3.11
 WORKDIR /usr/bin

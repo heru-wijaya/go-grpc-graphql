@@ -1,10 +1,9 @@
-//go:generate protoc --go_out=./model/pb --go_opt=module=github.com/heru-wijaya/go-grpc-skeleton/model/pb  ./model/account.proto
-//go:generate protoc --go-grpc_out=./model/pb --go-grpc_opt=module=github.com/heru-wijaya/go-grpc-skeleton/model/pb ./model/account.proto
 package server
 
 import (
 	"context"
 	"fmt"
+	"log"
 	"net"
 
 	pb "github.com/heru-wijaya/go-grpc-skeleton/model/pb"
@@ -20,6 +19,7 @@ type grpcServer struct {
 
 // ListenGRPC for register server to grpc
 func ListenGRPC(s service.AccountService, port int) error {
+	log.Println("server.server NewClient begin")
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
 		return err
@@ -31,6 +31,7 @@ func ListenGRPC(s service.AccountService, port int) error {
 }
 
 func (s *grpcServer) PostAccount(ctx context.Context, r *pb.PostAccountRequest) (*pb.PostAccountResponse, error) {
+	log.Println("server.server PostAccount begin")
 	a, err := s.accountService.PostAccount(ctx, r.Name)
 	if err != nil {
 		return nil, err
@@ -42,6 +43,7 @@ func (s *grpcServer) PostAccount(ctx context.Context, r *pb.PostAccountRequest) 
 }
 
 func (s *grpcServer) GetAccount(ctx context.Context, r *pb.GetAccountRequest) (*pb.GetAccountResponse, error) {
+	log.Println("server.server GetAccount begin")
 	a, err := s.accountService.GetAccount(ctx, r.Id)
 	if err != nil {
 		return nil, err
@@ -55,6 +57,7 @@ func (s *grpcServer) GetAccount(ctx context.Context, r *pb.GetAccountRequest) (*
 }
 
 func (s *grpcServer) GetAccounts(ctx context.Context, r *pb.GetAccountsRequest) (*pb.GetAccountsResponse, error) {
+	log.Println("server.server GetAccounts begin")
 	res, err := s.accountService.GetAccounts(ctx, r.Skip, r.Take)
 	if err != nil {
 		return nil, err

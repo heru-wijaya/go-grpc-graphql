@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"log"
 
 	pb "github.com/heru-wijaya/go-grpc-skeleton/model/pb"
 	repo "github.com/heru-wijaya/go-grpc-skeleton/repository"
@@ -16,6 +17,7 @@ type Client struct {
 
 // NewClient for register new client
 func NewClient(url string) (*Client, error) {
+	log.Println("server.client NewClient begin")
 	conn, err := grpc.Dial(url, grpc.WithInsecure())
 	if err != nil {
 		return nil, err
@@ -31,6 +33,7 @@ func (c *Client) Close() {
 
 // PostAccount for save new account
 func (c *Client) PostAccount(ctx context.Context, name string) (*repo.Account, error) {
+	log.Println("server.client PostAccount begin")
 	r, err := c.service.PostAccount(
 		ctx,
 		&pb.PostAccountRequest{Name: name},
@@ -46,6 +49,7 @@ func (c *Client) PostAccount(ctx context.Context, name string) (*repo.Account, e
 
 // GetAccount for get account by id
 func (c *Client) GetAccount(ctx context.Context, id string) (*repo.Account, error) {
+	log.Println("server.client GetAccount begin")
 	r, err := c.service.GetAccount(
 		ctx,
 		&pb.GetAccountRequest{Id: id},
@@ -61,6 +65,7 @@ func (c *Client) GetAccount(ctx context.Context, id string) (*repo.Account, erro
 
 // GetAccounts for get list of account
 func (c *Client) GetAccounts(ctx context.Context, skip uint64, take uint64) ([]repo.Account, error) {
+	log.Println("server.client GetAccounts begin")
 	r, err := c.service.GetAccounts(
 		ctx,
 		&pb.GetAccountsRequest{
