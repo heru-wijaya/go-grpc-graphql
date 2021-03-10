@@ -17,7 +17,7 @@ type Account struct {
 // AccountRepository is as an interface this repository
 type AccountRepository interface {
 	Close()
-	PutAccount(ctx context.Context, a Account) error
+	PostAccount(ctx context.Context, a Account) error
 	GetAccountByID(ctx context.Context, id string) (*Account, error)
 	ListAccounts(ctx context.Context, skip uint64, take uint64) ([]Account, error)
 }
@@ -50,8 +50,8 @@ func (r *postgresRepository) Ping() error {
 	return r.db.Ping()
 }
 
-func (r *postgresRepository) PutAccount(ctx context.Context, a Account) error {
-	log.Println("repository.account_repository PutAccount begin")
+func (r *postgresRepository) PostAccount(ctx context.Context, a Account) error {
+	log.Println("repository.account_repository PostAccount begin")
 	_, err := r.db.ExecContext(ctx, "INSERT INTO accounts(id, name) VALUES($1, $2)", a.ID, a.Name)
 	return err
 }

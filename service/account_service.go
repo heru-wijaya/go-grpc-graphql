@@ -30,7 +30,7 @@ func (s *accountService) PostAccount(ctx context.Context, name string) (*repo.Ac
 		Name: name,
 		ID:   ksuid.New().String(),
 	}
-	if err := s.repository.PutAccount(ctx, *a); err != nil {
+	if err := s.repository.PostAccount(ctx, *a); err != nil {
 		return nil, err
 	}
 	return a, nil
